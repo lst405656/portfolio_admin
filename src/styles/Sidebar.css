@@ -1,0 +1,17 @@
+.submenu {
+    list-style: none;
+    padding-left: 15px;
+    display: none;
+  }
+  
+  .submenu.open {
+    display: block;
+  }
+  
+  .toggle-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+  }

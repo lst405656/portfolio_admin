@@ -1,0 +1,26 @@
+.top-menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #3498DB;
+    padding: 10px 20px;
+    color: white;
+  }
+  
+  .top-menu-list {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+  }
+  
+  .top-menu-list li a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    transition: background 0.3s ease;
+  }
+  
+  .top-menu-list li a:hover {
+    background: #2980B9;
+    border-radius: 5px;
+  }
