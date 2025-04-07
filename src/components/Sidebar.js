@@ -1,28 +1,38 @@
 import { useState } from "react";
+// import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "../styles/Sidebar.css";
 
 function SidebarItem({ item }) {
   const [isOpen, setIsOpen] = useState(false);
-
-  // `children`이 없으면 빈 배열을 기본값으로 설정
   const children = item.children || [];
+
+  const hasChildren = children.length > 0;
 
   return (
     <li>
-      <a href={item.link} onClick={(e) => children.length > 0 && e.preventDefault()}>
-        {item.name}
-      </a>
-      {children.length > 0 && (
-        <>
-          <button onClick={() => setIsOpen(!isOpen)} className="toggle-btn">
-            {isOpen ? "🔽" : "▶"}
-          </button>
-          <ul className={`submenu ${isOpen ? "open" : "closed"}`}>
-            {children.map((child) => (
-              <SidebarItem key={child.id} item={child} />
-            ))}
-          </ul>
-        </>
+      {hasChildren ? (
+        // 자식이 있으면 페이지 이동 안 하고 토글만
+        <span onClick={() => setIsOpen(!isOpen)} className="menu-link with-children">
+          {item.name} <span className="toggle-icon">{isOpen ? "🔽" : "▶"}</span>
+        </span>
+      ) : (
+        // 자식이 없으면 Link 사용해서 라우터 이동
+        // <Link to={item.link} className="menu-link">
+        //   {item.name}
+        // </Link>
+        <NavLink to={item.link} className={({ isActive }) => isActive ? "active" : ""}>
+          {item.name}
+        </NavLink>
+        
+      )}
+
+      {hasChildren && (
+        <ul className={`submenu ${isOpen ? "open" : "closed"}`}>
+          {children.map((child) => (
+            <SidebarItem key={child.id} item={child} />
+          ))}
+        </ul>
       )}
     </li>
   );
