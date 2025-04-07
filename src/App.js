@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
 import TopMenu from "./components/TopMenu";
+import "./App.css";
 
 const loadComponent = (componentName) =>
   React.lazy(() => import(`./pages/${componentName}`));
@@ -37,7 +38,7 @@ function App() {
       { "path": "/login", "element": "Login" },
       { "path": "/dashboard", "element": "Dashboard" },
       { "path": "/users", "element": "Users" },
-      { "path": "/portfolio", "element": "PortfolioPage" },
+      { "path": "/portfolio", "element": "Portfolio" },
       // { "path": "/settings", "element": "SettingsPage" } // 새 페이지 추가
     ], []);
   }, []);
@@ -45,28 +46,33 @@ function App() {
   return (
     <Router>
         <TopMenu menuItems={topMenuItems} />
-        <Sidebar menuItems={sideMenuItems} />
-        {routes.length > 0 ? (
-            <Routes>
-                {routes.map((route, index) => {
-                    console.log("Trying to load:", route.element);
-                    const Component = loadComponent(route.element);
-                    return (
-                        <Route
-                            key={index}
-                            path={route.path}
-                            element={
-                                <React.Suspense fallback={<div>Loading...</div>}>
-                                    <Component />
-                                </React.Suspense>
-                            }
-                        />
-                    );
-                })}
-            </Routes>
-        ) : (
-            <div>Loading routes...</div>
-        )}
+        <div class="main-container">
+
+          <Sidebar menuItems={sideMenuItems} />
+          <main>
+          {routes.length > 0 ? (
+              <Routes>
+                  {routes.map((route, index) => {
+                      console.log("Trying to load:", route.element);
+                      const Component = loadComponent(route.element);
+                      return (
+                          <Route
+                              key={index}
+                              path={route.path}
+                              element={
+                                  <React.Suspense fallback={<div>Loading...</div>}>
+                                      <Component />
+                                  </React.Suspense>
+                              }
+                          />
+                      );
+                  })}
+              </Routes>
+          ) : (
+              <div>Loading routes...</div>
+          )}
+          </main>
+        </div>
     </Router>
   );
 }
