@@ -1,17 +1,60 @@
+.sidebar {
+  width: 250px;
+  background-color: #ffffff; /* 흰 배경 */
+  color: #333; /* 진한 회색 텍스트 */
+  padding: 20px;
+  height: 100vh;
+  border-right: 1px solid #e0e0e0; /* 오른쪽 경계선 */
+  font-family: 'Arial', sans-serif;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar a {
+  color: #333;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: background 0.3s ease;
+  font-weight: 500;
+  gap: 10px; /* 아이콘과 텍스트 간격 */
+}
+
+.sidebar a:hover {
+  background-color: #f0f0f0;
+}
+
+.sidebar a.active {
+  background-color: #e6f0ff;
+  color: #007bff;
+  font-weight: bold;
+}
+
+.toggle-btn {
+  background: none;
+  border: none;
+  color: #333;
+  font-size: 14px;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
 .submenu {
-    list-style: none;
-    padding-left: 15px;
-    display: none;
-  }
-  
-  .submenu.open {
-    display: block;
-  }
-  
-  .toggle-btn {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 14px;
-    cursor: pointer;
-  }
+  list-style: none;
+  padding-left: 20px;
+  display: none;
+}
+
+.submenu.open {
+  display: block;
+}
+
+.submenu.closed {
+  display: none;
+}
