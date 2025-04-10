@@ -1,0 +1,42 @@
+.portfolio-container {
+padding: 20px;
+max-width: 800px;
+margin: auto;
+}
+
+.search-box {
+margin-bottom: 10px;
+}
+
+.search-box input {
+padding: 8px;
+margin-right: 5px;
+}
+
+.input-box button {
+padding: 8px 12px;
+background-color: #4CAF50;
+color: white;
+border: none;
+cursor: pointer;
+}
+
+.input-box button:hover {
+background-color: #45a049;
+}
+
+.portfolio-container ul {
+list-style-type: none;
+padding: 0;
+}
+
+.portfolio-container li {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.pagination button {
+  margin: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}

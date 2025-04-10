@@ -1,0 +1,14 @@
+.dashboard {
+    background-color: white;
+    padding: 20px;
+}
+
+.container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.container > * {
+    width: calc(50% - 10px);
+}

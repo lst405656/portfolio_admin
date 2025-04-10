@@ -1,9 +1,7 @@
-
-
-
 import { Bar } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
 
+import "../styles/Stats.css";
 // Chart.js 등록
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -19,7 +17,11 @@ const data = {
 };
 
 function Stats() {
-    return <Bar data={data} />;
+  return (
+    <div className="chart-container">
+      <Bar data={data} />
+    </div>
+  );
 }
 
 export default Stats;
