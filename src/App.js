@@ -25,7 +25,7 @@ function App() {
           { id: 32, name: "🔹 계정 관리", link: "/settings/account" }
         ] 
       },
-      { id: 4, name: "포트폴리오", link: "/portfoliolist", children: [] }
+      { id: 4, name: "포트폴리오", link: "/portfolio/list", children: [] }
     ], []);
   
     setTopMenuItems([
@@ -38,7 +38,9 @@ function App() {
       { "path": "/login", "element": "Login" },
       { "path": "/dashboard", "element": "Dashboard" },
       { "path": "/users", "element": "Users" },
-      { "path": "/portfoliolist", "element": "PortfolioList" },
+      { "path": "/portfolio/list", "element": "Portfolio/List" },
+      { "path": "/portfolio/detail", "element": "Portfolio/Detail" },
+      { "path": "/portfolio/insert", "element": "Portfolio/Insert" },
       // { "path": "/settings", "element": "SettingsPage" } // 새 페이지 추가
     ], []);
   }, []);
