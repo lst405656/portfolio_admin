@@ -1,42 +1,69 @@
 .portfolio-container {
-padding: 20px;
-max-width: 800px;
-margin: auto;
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
 }
 
 .search-box {
-margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 .search-box input {
-padding: 8px;
-margin-right: 5px;
+    padding: 8px;
+    margin-right: 5px;
 }
 
 .input-box button {
-padding: 8px 12px;
-background-color: #4CAF50;
-color: white;
-border: none;
-cursor: pointer;
+    padding: 8px 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
 }
 
 .input-box button:hover {
-background-color: #45a049;
+    background-color: #45a049;
 }
 
 .portfolio-container ul {
-list-style-type: none;
-padding: 0;
+    list-style-type: none;
+    padding: 0;
 }
 
 .portfolio-container li {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
 }
 
 .pagination button {
-  margin: 5px;
-  padding: 5px 10px;
-  cursor: pointer;
+    margin: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+
+.portfolio table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+}
+
+.portfolio th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.portfolio th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.portfolio tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.portfolio a {
+    text-decoration: none;
+    color: #007bff;
 }
