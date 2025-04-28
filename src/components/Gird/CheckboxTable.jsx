@@ -2,7 +2,7 @@ import { useState } from "react";
 import BaseGrid from "./Base";
 import { Link } from "react-router-dom";
 
-function CheckboxTableGrid({ className, columns, data, selectedItems, setSelectedItems }) {
+function CheckboxTableGrid({ className, columns, data, selectedItems, setSelectedItems, onItemClick }) {
     const isAllSelected = selectedItems.length === data.length;
 
     const handleSelect = (id) => {
@@ -25,23 +25,7 @@ function CheckboxTableGrid({ className, columns, data, selectedItems, setSelecte
                 />
             </td>
             {columns.map((col, colIndex) => {
-                const cellData = item[col.key];
-                let content;
-                switch (cellData?.option?.type) {
-                    case "link":
-                        content = cellData.option.href.startsWith("/") ? (
-                            <Link to={cellData.option.href}>{cellData.value}</Link>
-                        ) : (
-                            <a href={cellData.option.href} target="_blank" rel="noopener noreferrer">
-                                {cellData.value}
-                            </a>
-                        );
-                        break;
-                    default:
-                        content = cellData.value;
-                        break;
-                }
-                return <td key={colIndex}>{content}</td>;
+                return <td key={colIndex}>{item[col.key].value}</td>;
             })}
         </tr>
     );

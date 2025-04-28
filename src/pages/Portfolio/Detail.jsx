@@ -9,8 +9,6 @@ function PortfolioDetail() {
     const [updateDate, setDate] = useState(new Date().toLocaleDateString());
     const [content, setContent] = useState("이곳에 입력하세요");
 
-
-
     return (
         <div>
             <h2>경력 기술서</h2>
@@ -41,7 +39,7 @@ function PortfolioDetail() {
                         <label>{updateDate}</label>
                     </div>
                     <div>
-                    <ClassicEditorWrapper></ClassicEditorWrapper>
+                        <ClassicEditorWrapper></ClassicEditorWrapper>
                     </div>
                 </>
             )

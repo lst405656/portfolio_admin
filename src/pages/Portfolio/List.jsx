@@ -74,6 +74,11 @@ function PortfolioList() {
     ];
 
     const [selectedItems, setSelectedItems] = useState([]);
+    const [isDetailVisible, setIsDetailVisible] = useState(false);
+
+    const handleItemClick = (item) => {
+        setIsDetailVisible(true);
+    }
 
     // const [currentPage, setCurrentPage] = useState(1);
     // const [searchTerm, setSearchTerm] = useState("");
@@ -88,16 +93,32 @@ function PortfolioList() {
     // const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
 
     return (
-        <div className="portfolio-container">
-            <h1>📊 포트폴리오 페이지</h1>
-            <CheckTable
-                className={"portfolio"}
-                type={"table"}
-                columns={columns}
-                data={items}
-                selectedItems={selectedItems}
-                setSelectedItems={setSelectedItems}
-                ></CheckTable>
+        <div class="portfolio-container">
+            <div class="portfolio-list">
+                <h1>📊 포트폴리오 페이지</h1>
+                <CheckTable
+                    className={"portfolio"}
+                    type={"table"}
+                    columns={columns}
+                    data={items}
+                    selectedItems={selectedItems}
+                    setSelectedItems={setSelectedItems}
+                    onItemClick={handleItemClick}
+                    ></CheckTable>
+            </div>
+            {isDetailVisible  && (
+                <div class="portfolio-detail-overlay">
+                <div>
+                    <label>제목:</label>
+                    <input></input>
+                </div>
+                <div>
+                    <label>수정날짜: </label>
+                </div>
+                <div>
+                </div>
+                </div>
+            )}
         </div>
     );
 }
