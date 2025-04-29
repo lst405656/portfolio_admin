@@ -13,6 +13,11 @@
   flex: 1; /* 남은 공간을 채움 */
 }
 
+main {
+  flex: 1;
+  background-color: #FFFDF6;
+}
+
 
 
 @media (prefers-reduced-motion: no-preference) {

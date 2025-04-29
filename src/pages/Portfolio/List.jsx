@@ -74,11 +74,20 @@ function PortfolioList() {
     ];
 
     const [selectedItems, setSelectedItems] = useState([]);
-    const [isDetailVisible, setIsDetailVisible] = useState(false);
+    const [isDetailVisible, setIsDetailVisible] = useState(null);
 
-    const handleItemClick = (item) => {
-        setIsDetailVisible(true);
-    }
+    const events = {
+        onCellClick : (item, col, rowIndex, conIndex) => {
+            let data = item;
+
+            if (isDetailVisible && isDetailVisible.index === rowIndex) {
+                data = null;
+            }
+
+            setIsDetailVisible(data); // 새로운 항목을 클릭하면 상세 정보 표시
+        }
+}
+    
 
     // const [currentPage, setCurrentPage] = useState(1);
     // const [searchTerm, setSearchTerm] = useState("");
@@ -103,14 +112,14 @@ function PortfolioList() {
                     data={items}
                     selectedItems={selectedItems}
                     setSelectedItems={setSelectedItems}
-                    onItemClick={handleItemClick}
-                    ></CheckTable>
+                    events={events}
+                ></CheckTable>
             </div>
             {isDetailVisible  && (
-                <div class="portfolio-detail-overlay">
+                <div className="portfolio-detail-overlay">
                 <div>
                     <label>제목:</label>
-                    <input></input>
+                    <label>{isDetailVisible.title.value}</label>
                 </div>
                 <div>
                     <label>수정날짜: </label>

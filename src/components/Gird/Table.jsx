@@ -1,8 +1,9 @@
-import BaseGrid from "./Base";
+import Render from "./Render";
 import { Link } from "react-router-dom";
 
 function TableGrid({ className, columns, data }) {
     const renderRow = (item, rowIndex) => (
+        
         <tr key={rowIndex}>
             {columns.map((col, colIndex) => {
                 const cellData = item[col.key];
@@ -27,7 +28,20 @@ function TableGrid({ className, columns, data }) {
         </tr>
     );
 
-    return <BaseGrid className={className} columns={columns} data={data} renderRow={renderRow} />;
+    return (
+        <table className={className}>
+            <thead>
+                <tr>
+                    {columns.map((col, index) => (
+                        <th key={index}>{col.label}</th>
+                    ))}
+                </tr>
+            </thead>
+            <tbody>
+                <Render data={data} renderRow={renderRow} />
+            </tbody>
+        </table>
+    );
 }
 
 export default TableGrid;

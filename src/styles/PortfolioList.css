@@ -1,46 +1,7 @@
 .portfolio-container {
-    padding: 20px;
-    max-width: 800px;
-    margin: auto;
+    display: flex;
+    justify-content: space-between;
 }
-
-.search-box {
-    margin-bottom: 10px;
-}
-
-.search-box input {
-    padding: 8px;
-    margin-right: 5px;
-}
-
-.input-box button {
-    padding: 8px 12px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-.input-box button:hover {
-    background-color: #45a049;
-}
-
-.portfolio-container ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.portfolio-container li {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-}
-
-.pagination button {
-    margin: 5px;
-    padding: 5px 10px;
-    cursor: pointer;
-}
-
 
 .portfolio table {
     width: 100%;
@@ -69,19 +30,11 @@
 }
 
 .portfolio-detail-overlay {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 400px;
+    width: 800px;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: #F5F7FA;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     transition: transform 0.3s ease;
-    transform: translateX(100%); /* 초기에는 오른쪽 밖에 위치 */
-}
-
-.portfolio-detail-overlay.visible {
-    transform: translateX(0); /* visible 클래스가 추가되면 화면에 등장 */
 }

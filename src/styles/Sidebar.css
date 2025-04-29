@@ -1,10 +1,11 @@
 .sidebar {
   width: 250px;
-  background-color: #ffffff; /* 흰 배경 */
+  background-color: #FAF6E9;
   color: #333; /* 진한 회색 텍스트 */
   padding: 20px;
   height: 100vh;
   font-family: 'Arial', sans-serif;
+  flex-shrink: 0;
 }
 
 .sidebar ul {
