@@ -1,40 +1,62 @@
 .portfolio-container {
     display: flex;
     justify-content: space-between;
+    padding-left: 20px;
 }
 
-.portfolio table {
+/* PortfolioList.css - 모던 리스트형 테이블 */
+
+.portfolio {
     width: 100%;
     border-collapse: collapse;
-    font-family: Arial, sans-serif;
-}
-
-.portfolio th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
+    border-spacing: 0 8px; /* row 간격 벌어지게 */
+    font-family: 'Noto Sans KR', sans-serif;
+    margin: auto;
 }
 
 .portfolio th {
-    background-color: #f4f4f4;
-    font-weight: bold;
+    text-align: left;
+    padding: 8px 16px;
+    color: #6c757d;
+    font-size: 13px;
+    font-weight: 500;
 }
 
-.portfolio tr:nth-child(even) {
-    background-color: #f9f9f9;
+.portfolio thead {
+    background-color: #D6DAEB;
+}
+  
+.portfolio td {
+    background: #fff;
+    padding: 16px;
+    vertical-align: middle;
+    font-size: 14px;
+    border-top: 1px solid #e9ecef;
+    border-bottom: 1px solid #e9ecef;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
 }
 
-.portfolio a {
-    text-decoration: none;
-    color: #007bff;
+.portfolio tbody tr:hover td {
+    background-color: #f8f9fa;
 }
-
-.portfolio-detail-overlay {
-    width: 800px;
-    height: 100%;
-    background-color: #F5F7FA;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    transition: transform 0.3s ease;
+  
+.portfolio input[type='checkbox'] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
 }
+  
+.status-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #fff;
+}
+  
+.status-draft { background-color: #6c757d; }
+.status-urgent { background-color: #fd7e14; }
+.status-onprocess { background-color: #0d6efd; }
+.status-close { background-color: #adb5bd; }
+  
