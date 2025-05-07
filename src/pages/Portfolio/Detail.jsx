@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
+import PortfolioModal from "../../components/Modal/Portfolio/index"
 import "../../styles/PortfolioDetail.css";
 
 const PortfolioDetail = (props) => {
-    const [isEditing, setIsEditing] = useState({
-        description: false,
-        responsibilities: false,
-        techStack: false
-    });
+    const [editKey, setEditKey] = useState(null);
+
+    const openEditModal = (key) => setEditKey(key);
+    const  closeEditModal = () => setEditKey(null);
 
     const [editedData, setEditedData] = useState({
         description: props.description,
@@ -14,18 +14,43 @@ const PortfolioDetail = (props) => {
         techStack: props.techStack
     });
 
-    const handleEditToggle = (key) => {
-        setIsEditing((prev) => ({
-            ...prev,
-            [key]: !prev[key]
-        }));
-    };
-
     const handleChange = (key, value) => {
         setEditedData((prev) => ({
             ...prev,
             [key]: value
         }));
+    };
+
+    const handleSave = (key, value) => {
+        handleChange(key, value);
+        closeEditModal();
+    };
+    
+    const renderModal = () => {
+
+        //값이 없으면 종료
+        if(!editKey){
+            return;
+        }
+        const currentValue = editedData[editKey];
+        const commonProps = {
+            isOpen: true,
+            value: currentValue,
+            onChange: (val) => handleChange(editKey, val),
+            onSave: () => closeEditModal(),
+            onClose: closeEditModal
+        };
+
+        switch(editKey){
+            case "description":
+                return <PortfolioModal.DescriptionEdit {...commonProps} />;
+            case "responsibilities":
+                return <PortfolioModal.ResponsibilitiesEdit {...commonProps} />;
+            case "techStack":
+                return <PortfolioModal.TechStackEdit {...commonProps} />;
+            default:
+                return null;
+        }
     };
 
     return (
@@ -43,56 +68,31 @@ const PortfolioDetail = (props) => {
 
             <div className="section">
                 <h2>설명
-                    <button onClick={() => handleEditToggle("description")}>+</button>
+                    <button onClick={() => openEditModal("description")}>+</button>
                 </h2>
-                {isEditing.description ? (
-                    <textarea
-                        value={editedData.description}
-                        onChange={(e) => handleChange("description", e.target.value)}
-                    />
-                ) : (
-                    <p>{editedData.description}</p>
-                )}
+                <p>{props.description}</p>
             </div>
 
             <div className="section">
                 <h2>주요 업무 및 역할
-                    <button onClick={() => handleEditToggle("responsibilities")}>+</button>
+                    <button onClick={() => openEditModal("responsibilities")}>+</button>
                 </h2>
-                {isEditing.responsibilities ? (
-                    <textarea
-                        value={editedData.responsibilities.join("\n")}
-                        onChange={(e) =>
-                            handleChange("responsibilities", e.target.value.split("\n"))
-                        }
-                    />
-                ) : (
-                    <ul>
-                        {editedData.responsibilities.map((item, index) => (
-                            <li key={index}>{item}</li>
-                        ))}
-                    </ul>
-                )}
+                <ul>
+                    {props.responsibilities.map((item, index) => (
+                        <li key={index}>{item}</li>
+                    ))}
+                </ul>
             </div>
 
             <div className="section">
                 <h2>사용 도구 및 기술
-                    <button onClick={() => handleEditToggle("techStack")}>+</button>
+                    <button onClick={() => openEditModal("techStack")}>+</button>
                 </h2>
-                {isEditing.techStack ? (
-                    <textarea
-                        value={editedData.techStack.join("\n")}
-                        onChange={(e) =>
-                            handleChange("techStack", e.target.value.split("\n"))
-                        }
-                    />
-                ) : (
-                    <ul className="tech-stack">
-                        {editedData.techStack.map((tech, index) => (
-                            <li key={index}>{tech}</li>
-                        ))}
-                    </ul>
-                )}
+                <ul className="tech-stack">
+                    {props.techStack.map((tech, index) => (
+                        <li key={index}>{tech}</li>
+                    ))}
+                </ul>
             </div>
 
             {props.outcome && (
@@ -117,6 +117,7 @@ const PortfolioDetail = (props) => {
                     ))}
                 </div>
             )}
+            {renderModal()}
         </div>
     );
 };

@@ -48,7 +48,7 @@ function App() {
   return (
     <Router>
         <TopMenu menuItems={topMenuItems} />
-        <div class="main-container">
+        <div className="main-container">
 
           <Sidebar menuItems={sideMenuItems} />
           <main>
