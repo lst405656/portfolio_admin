@@ -6,8 +6,6 @@ import "../../styles/PortfolioList.css";
 function PortfolioList() {
 	const [items, setItems] = useState([
 		{
-			// 실제 데이터 예시: FCM 로직 개선
-			id: {value: "1"},
 			title: {value: "FCM 로직 개선"},
 			period: {value:"2023.03 ~ 2023.04 (약 1개월)"},
 			description: {value: "기존 C# 기반의 푸시 메시지 전송 로직이 각 메시지를 개별 처리하여 속도 저하 문제가 발생하였고, 이를 해결하기 위해 C# 및 Java 기반으로 메시지를 일괄 처리(500개씩) 하는 방식으로 개선하였습니다."},
@@ -24,7 +22,6 @@ function PortfolioList() {
 			]},
 		},
 		{
-			id: {value: "2"},
 			title: {value: "프로젝트 A"},
 			period: {value: "2023.04 ~ 2023.05"},
 			description: {value: "여기에 프로젝트 A의 개요를 작성하세요."},
@@ -34,7 +31,6 @@ function PortfolioList() {
 			files: {Value: [{icon: "/icons/doc.png", link: "/docs/A_Docs.pdf", name: "A_Docs.pdf"}]},
 		},
 		{
-			id: {value: "3"},
 			title: {value: "프로젝트 B", option: {type: "link", href: "/portfolio/detail?index=3"}},
 			period: {value: "2023.06 ~ 2023.07"},
 			description: {value: "프로젝트 B 개요"},
@@ -44,7 +40,6 @@ function PortfolioList() {
 			files: {value: []},
 		},
 		{
-			id: {value: "4"},
 			title: {value: "프로젝트 C", option: {type: "link", href: "/portfolio/detail?index=4"}},
 			period: {value: "2023.08 ~ 2023.09"},
 			description: {value: "프로젝트 C 개요"},
@@ -54,7 +49,6 @@ function PortfolioList() {
 			files: {value: []},
 		},
 		{
-			id: {value: "5"},
 			title: {value: "프로젝트 D", option: {type: "link", href: "/portfolio/detail?index=5"}},
 			period: {value: "2023.10 ~ 2023.11"},
 			description: {value: "프로젝트 D 개요"},
@@ -66,8 +60,8 @@ function PortfolioList() {
 	]);
 
 	const columns = [
-		{key: "id", label: "ID"},
 		{key: "title", label: "제목"},
+		{key: "period", label: "기간"}
 	];
 
 	const [selectedItems, setSelectedItems] = useState([]);

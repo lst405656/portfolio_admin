@@ -1,7 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import "../../styles/PortfolioDetail.css";
 
 const PortfolioDetail = (props) => {
+    const [isEditing, setIsEditing] = useState({
+        description: false,
+        responsibilities: false,
+        techStack: false
+    });
+
+    const [editedData, setEditedData] = useState({
+        description: props.description,
+        responsibilities: props.responsibilities,
+        techStack: props.techStack
+    });
+
+    const handleEditToggle = (key) => {
+        setIsEditing((prev) => ({
+            ...prev,
+            [key]: !prev[key]
+        }));
+    };
+
+    const handleChange = (key, value) => {
+        setEditedData((prev) => ({
+            ...prev,
+            [key]: value
+        }));
+    };
+
     return (
         <div className={`portfolio-detail ${props.className}`}>
             <button
@@ -16,26 +42,57 @@ const PortfolioDetail = (props) => {
             <p className="meta">{props.period}</p>
 
             <div className="section">
-                <h2>설명</h2>
-                <p>{props.description}</p>
+                <h2>설명
+                    <button onClick={() => handleEditToggle("description")}>+</button>
+                </h2>
+                {isEditing.description ? (
+                    <textarea
+                        value={editedData.description}
+                        onChange={(e) => handleChange("description", e.target.value)}
+                    />
+                ) : (
+                    <p>{editedData.description}</p>
+                )}
             </div>
 
             <div className="section">
-                <h2>주요 업무 및 역할</h2>
-                <ul>
-                    {props.responsibilities.map((item, index) => (
-                        <li key={index}>{item}</li>
-                    ))}
-                </ul>
+                <h2>주요 업무 및 역할
+                    <button onClick={() => handleEditToggle("responsibilities")}>+</button>
+                </h2>
+                {isEditing.responsibilities ? (
+                    <textarea
+                        value={editedData.responsibilities.join("\n")}
+                        onChange={(e) =>
+                            handleChange("responsibilities", e.target.value.split("\n"))
+                        }
+                    />
+                ) : (
+                    <ul>
+                        {editedData.responsibilities.map((item, index) => (
+                            <li key={index}>{item}</li>
+                        ))}
+                    </ul>
+                )}
             </div>
 
             <div className="section">
-                <h2>사용 도구 및 기술</h2>
-                <ul className="tech-stack">
-                    {props.techStack.map((tech, index) => (
-                        <li key={index}>{tech}</li>
-                    ))}
-                </ul>
+                <h2>사용 도구 및 기술
+                    <button onClick={() => handleEditToggle("techStack")}>+</button>
+                </h2>
+                {isEditing.techStack ? (
+                    <textarea
+                        value={editedData.techStack.join("\n")}
+                        onChange={(e) =>
+                            handleChange("techStack", e.target.value.split("\n"))
+                        }
+                    />
+                ) : (
+                    <ul className="tech-stack">
+                        {editedData.techStack.map((tech, index) => (
+                            <li key={index}>{tech}</li>
+                        ))}
+                    </ul>
+                )}
             </div>
 
             {props.outcome && (

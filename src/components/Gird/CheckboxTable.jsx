@@ -12,6 +12,11 @@ function CheckboxTableGrid({
     const isAllSelected = selectedItems.length === data.length;
     const headerCheckboxRef = useRef(null);
 
+    const modifiedData = data.map((item, index) => ({
+        ...item,
+        index
+    }));
+
     useEffect(() => {
         if (headerCheckboxRef.current) {
             headerCheckboxRef.current.indeterminate =
@@ -19,14 +24,14 @@ function CheckboxTableGrid({
         }
     }, [selectedItems, data]);
 
-    const handleSelect = (id) => {
+    const handleSelect = (index) => {
         setSelectedItems((prev) =>
-            prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+            prev.includes(index) ? prev.filter((item) => item !== index) : [...prev, index]
         );
     };
 
     const handleSelectAll = () => {
-        setSelectedItems(isAllSelected ? [] : data.map((item) => item.id.value));
+        setSelectedItems(isAllSelected ? [] : modifiedData.map((item) => item.index));
     };
 
     const renderRow = (item, rowIndex) => (
@@ -37,9 +42,9 @@ function CheckboxTableGrid({
             <td>
                 <input
                     type="checkbox"
-                    checked={selectedItems.includes(item.id.value)}
-                    onChange={() => handleSelect(item.id.value)}
-                    onClick={(e) => e.stopPropagation()} //row 클릭 방지
+                    checked={selectedItems.includes(item.index)}
+                    onChange={() => handleSelect(item.index)}
+                    onClick={(e) => e.stopPropagation()}//row 클릭 방지
                 />
             </td>
             {columns.map((col, colIndex) => (
@@ -55,11 +60,6 @@ function CheckboxTableGrid({
             ))}
         </tr>
     );
-
-    const modifiedData = data.map((item, index) => ({
-        ...item,
-        index
-    }));
 
     return (
         <table className={className}>
