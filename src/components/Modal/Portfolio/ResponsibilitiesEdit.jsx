@@ -19,7 +19,7 @@ const ResponsibilitiesEdit = ({ isOpen, value, onChange, onSave, onClose }) => {
         for(let i = 0; i < value.length; i++){
 
             //해당 인덱스일 경우 제외
-            if(i == index){
+            if(i === index){
                 continue;
             }
                 newArray.push(value[i]);

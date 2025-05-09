@@ -33,7 +33,7 @@ const PortfolioDetail = (props) => {
         if(!editKey){
             return;
         }
-        const currentValue = editedData[editKey];
+        const currentValue = props[editKey];
         const commonProps = {
             isOpen: true,
             value: currentValue,

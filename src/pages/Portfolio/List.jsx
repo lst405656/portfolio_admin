@@ -102,9 +102,9 @@ function PortfolioList() {
 				<Detail
 					className={animationState}
 					onAnimationEnd={() => {
-					if (animationState === "hide") {
-						setIsDetailVisible(null);
-					}
+						if (animationState === "hide") {
+							setIsDetailVisible(null);
+						}
 					}}
 					onClose={closeDetail}
 					title={isDetailVisible.value.title.value}
