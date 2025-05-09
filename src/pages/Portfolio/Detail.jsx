@@ -6,12 +6,13 @@ const PortfolioDetail = (props) => {
     const [editKey, setEditKey] = useState(null);
 
     const openEditModal = (key) => setEditKey(key);
-    const  closeEditModal = () => setEditKey(null);
+    const closeEditModal = () => setEditKey(null);
 
     const [editedData, setEditedData] = useState({
         description: props.description,
         responsibilities: props.responsibilities,
-        techStack: props.techStack
+        techStack: props.techStack,
+        outcome: props.outcome
     });
 
     const handleChange = (key, value) => {
@@ -48,6 +49,8 @@ const PortfolioDetail = (props) => {
                 return <PortfolioModal.ResponsibilitiesEdit {...commonProps} />;
             case "techStack":
                 return <PortfolioModal.TechStackEdit {...commonProps} />;
+            case "outcome":
+                return <PortfolioModal.PerformanceEdit {...commonProps} />;
             default:
                 return null;
         }
@@ -97,7 +100,9 @@ const PortfolioDetail = (props) => {
 
             {props.outcome && (
                 <div className="section">
-                    <h2>성과</h2>
+                    <h2>성과
+                        <button onClick={() => openEditModal("outcome")}>+</button>
+                    </h2>
                     <div className="outcome-highlight">{props.outcome}</div>
                 </div>
             )}

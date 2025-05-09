@@ -4,7 +4,7 @@ const DescriptionEdit = ({ isOpen, value, onChange, onSave, onClose }) => (
     <Modal
         isOpen={isOpen} onClose={onClose}
     >
-        <h3>설명 수정</h3>
+        <h3>성과 수정</h3>
         <textarea
             value={value}
             onChange={e => onChange(e.target.value)}
