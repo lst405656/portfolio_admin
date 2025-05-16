@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PortfolioModal from "../../components/Modal/Portfolio/index"
+import PortfolioModal from "../../components/Modal/Portfolio/index";
 import "../../styles/PortfolioDetail.css";
 
 const PortfolioDetail = (props) => {

@@ -1,9 +1,18 @@
 import React, {useState} from "react";
 import CheckTable from "../../components/Gird/CheckboxTable";
 import Detail from "../../pages/Portfolio/Detail";
+import supabase from "../../supabaseClient";
 import "../../styles/PortfolioList.css";
 
 function PortfolioList() {
+	const fetchData = async () => {
+		let { data, error } = await supabase
+			.from("portfolio") // portfolio 테이블
+			.select("id, title, tech (name), responsibilities (description)"); // JOIN된 테이블
+		console.log(data);
+	};
+
+	console.log(fetchData());
 	const [items, setItems] = useState([
 		{
 			title: {value: "FCM 로직 개선"},
