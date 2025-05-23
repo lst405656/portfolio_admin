@@ -1,15 +1,29 @@
-import React from 'react';
+import { useState, useEffect} from "react";
 import Modal from "../Render";
 import "../../../styles/ResponsibilitiesEdit.css"
 
 const ResponsibilitiesEdit = ({ isOpen, value, onChange, onSave, onClose }) => {
 
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        if(!isOpen){
+            return;
+        }
+        setData(value || []);
+    }, [isOpen, value]);
+
     //내용이 바뀌면 배열 내 해당 인덱스 값 업데이트
     const handleInputChange = (e, index) => {
-        const newValue = e.target.value;
         const newArray = [...value];
-        newArray[index] = newValue;
-        onChange(newArray);
+        newArray[index] = e.target.value;
+        setData(newArray);
+    };
+
+    //저장시 부모요소로 데이터 전달
+    const handleSave = () => {
+        onSave(data);
+        onClose();
     };
 
     //해당 인덱스 항목 제거
@@ -22,15 +36,14 @@ const ResponsibilitiesEdit = ({ isOpen, value, onChange, onSave, onClose }) => {
             if(i === index){
                 continue;
             }
-                newArray.push(value[i]);
+            newArray.push(value[i]);
         }
-        onChange(newArray);
+        setData(newArray);
     };
 
     //새로운 항목 추가
     const handleAddItem = () => {
-    const newArray = [...value, ""];
-        onChange(newArray);
+        setData([...value, "새로운 업무"]);
     };
 
     return (
@@ -38,7 +51,7 @@ const ResponsibilitiesEdit = ({ isOpen, value, onChange, onSave, onClose }) => {
             <h3>주요 업무 수정</h3>
       
             <div className="responsibilities-container">
-                {value.map((item, index) => (
+                {data.map((item, index) => (
                     <div
                         key={index}
                         className="responsibility-item"
@@ -57,7 +70,7 @@ const ResponsibilitiesEdit = ({ isOpen, value, onChange, onSave, onClose }) => {
                 
                 <div className="action-buttons">
                     <button onClick={onClose} className="cancel-btn">취소</button>
-                    <button onClick={onSave} className="save-btn">저장</button>
+                    <button onClick={handleSave} className="save-btn">저장</button>
                 </div>
         </div>
         </Modal>

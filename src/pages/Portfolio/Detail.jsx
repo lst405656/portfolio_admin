@@ -6,7 +6,9 @@ const PortfolioDetail = (props) => {
     const [editKey, setEditKey] = useState(null);
 
     const openEditModal = (key) => setEditKey(key);
-    const closeEditModal = () => setEditKey(null);
+    const closeEditModal = () => {
+        setEditKey(null);
+    }
 
     const [editedData, setEditedData] = useState({
         description: props.description,
@@ -22,9 +24,14 @@ const PortfolioDetail = (props) => {
         }));
     };
 
-    const handleSave = (key, value) => {
-        handleChange(key, value);
-        closeEditModal();
+    const handleSave = async(key, value) => {
+        try{
+            handleChange(key, value);
+            closeEditModal();
+
+        }catch{
+            
+        }
     };
     
     const renderModal = () => {
@@ -38,7 +45,7 @@ const PortfolioDetail = (props) => {
             isOpen: true,
             value: currentValue,
             onChange: (val) => handleChange(editKey, val),
-            onSave: () => closeEditModal(),
+            onSave: (data) => handleSave(editKey, data),
             onClose: closeEditModal
         };
 

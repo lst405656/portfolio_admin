@@ -1,19 +1,27 @@
 import React, { useState, useEffect } from "react";
 import CheckTable from "../../components/Gird/CheckboxTable";
 import Detail from "../../pages/Portfolio/Detail";
-import supabase from "../../supabaseClient";
+import { supabaseAPI } from "../../supabaseClient";
 import "../../styles/PortfolioList.css";
 
 function PortfolioList() {
 	const [items, setItems] = useState([]);
 	const [loading, setLoading] = useState(true);
-	const [fetchError, setFetchError] = useState(null);
+	const defaultInsertData = {
+		title: { value: "제목을 입력하세요." },
+		period: { value: "기간을 입력하세요." },
+		description: { value: "설명을 입력하세요." },
+		responsibilities: { value: [] },
+		techStack: { value: [] },
+		outcome: { value: "결과를 입력하세요." },
+		files: { value: [] }
+	}
 
 	//Supabase에서 데이터 불러오기
 	const fetchData = async () => {
-		const { data, error } = await supabase
-			.from("portfolio")
-			.select(`
+		try{
+			const data = await supabaseAPI.getList("portfolio",
+			`
 				id,
 				title,
 				period,
@@ -27,12 +35,10 @@ function PortfolioList() {
 				)
 			`);
 
-		if (error) {
-			console.error("데이터 가져오기 실패:", error.message);
-			setFetchError(error.message);
-			setLoading(false);
-		} else {
-			//items 형태로 가공
+			if (!data) {
+				throw new Error("데이터를 가져오지 못했습니다.");
+			}
+
 			const formattedData = data.map((item, index) => ({
 				title: { value: item.title, option: { type: "link", href: `/portfolio/detail?index=${index + 1}` } },
 				period: { value: item.period },
@@ -42,9 +48,15 @@ function PortfolioList() {
 				outcome: { value: item.outcome },
 				files: { value: [] }
 			}));
+
 			setItems(formattedData);
 			setLoading(false);
+
+		}catch(error){
+			console.error("🚨 데이터 로딩 중 오류 발생:", error);
+			setLoading(false);
 		}
+
 	};
 
 	useEffect(() => {
@@ -65,10 +77,14 @@ function PortfolioList() {
 			if (isDetailVisible && isDetailVisible.index === rowIndex && animationState === "show") {
 				closeDetail();
 			} else {
-				setIsDetailVisible({ value: item, index: rowIndex });
-				setAnimationState("show");
+				openDetail(item, rowIndex);
 			}
 		},
+	};
+
+	const openDetail = (value, rowIndex) => {
+		setIsDetailVisible({ value: value, index: rowIndex });
+		setAnimationState("show");
 	};
 
 	const closeDetail = () => {
@@ -76,12 +92,13 @@ function PortfolioList() {
 	};
 
 	if (loading) return <p>⏳ 로딩 중...</p>;
-	if (fetchError) return <p>❌ 에러: {fetchError}</p>;
 
 	return (
 		<div className="portfolio-container">
 			<div className="portfolio-list">
-				<h1>📊 포트폴리오 페이지</h1>
+				<h1>📊 포트폴리오 페이지
+					<button onClick={() => openDetail(defaultInsertData, "")}>+</button>
+				</h1>
 				<CheckTable
 					className={"portfolio"}
 					type={"table"}
