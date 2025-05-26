@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Render from "./Render";
 
-const Mulit = () => {
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
+const Multi = ({start, end}) => {
+    const [startDate, setStartDate] = useState(start || new Date());
+    const [endDate, setEndDate] = useState(end || new Date());
     return (
         <div>
             <Render 
@@ -23,4 +23,4 @@ const Mulit = () => {
     );
 };
 
-export default Mulit;
+export default Multi;

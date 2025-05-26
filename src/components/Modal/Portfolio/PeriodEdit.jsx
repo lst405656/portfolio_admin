@@ -1,15 +1,16 @@
-import Modal from "../Render"
+import Modal from "../Render";
+import Multi from "../../Date/Multi";
 
 const DescriptionEdit = ({ isOpen, value, onChange, onSave, onClose }) => (
     <Modal
         isOpen={isOpen} onClose={onClose}
     >
         <h3>기간 수정</h3>
-        <textarea
-            value={value}
-            onChange={e => onChange(e.target.value)}
-            rows={6}
-        ></textarea>
+        <Multi
+            start={value.startDate}
+            end={value.endDate}
+        >
+        </Multi>
 
         <div className="action-buttons">
             <button onClick={onClose} className="cancel-btn">취소</button>

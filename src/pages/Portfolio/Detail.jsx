@@ -51,9 +51,15 @@ const PortfolioDetail = (props) => {
 
         switch(editKey){
             case "title":
-                return <PortfolioModal.DescriptionEdit {...commonProps} />;
+                return <PortfolioModal.TitleEdit {...commonProps} />;
             case "period":
-                return <PortfolioModal.DescriptionEdit {...commonProps} />;
+                commonProps.value = {
+                    startDate: props.startDate,
+                    endDate: props.endDate
+                }
+                return <PortfolioModal.PeriodEdit
+                    { ...commonProps }
+                />;
             case "description":
                 return <PortfolioModal.DescriptionEdit {...commonProps} />;
             case "responsibilities":
@@ -82,7 +88,7 @@ const PortfolioDetail = (props) => {
                 <button onClick={() => openEditModal("title")}>+</button>
             </h1>
             <p className="meta">
-                {props.period}
+                {props.startDate} ~ {props.endDate}
                 <button onClick={() => openEditModal("period")}>+</button>
             </p>
             <div className="section">

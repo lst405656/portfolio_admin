@@ -24,7 +24,8 @@ function PortfolioList() {
 			`
 				id,
 				title,
-				period,
+				startDate,
+				endDate,
 				description,
 				outcome,
 				tech_stack (
@@ -41,7 +42,11 @@ function PortfolioList() {
 
 			const formattedData = data.map((item, index) => ({
 				title: { value: item.title, option: { type: "link", href: `/portfolio/detail?index=${index + 1}` } },
-				period: { value: item.period },
+				period: {
+					value: `${item.startDate} ~ ${item.endDate}`
+				},
+				startDate: { value: item.startDate },
+				endDate: { value: item.endDate },
 				description: { value: item.description },
 				responsibilities: { value: item.responsibilities.map(r => r.responsibility) },
 				techStack: { value: item.tech_stack.map(t => t.tech) },
@@ -120,7 +125,8 @@ function PortfolioList() {
 					}}
 					onClose={closeDetail}
 					title={isDetailVisible.value.title.value}
-					period={isDetailVisible.value.period.value}
+					startDate={isDetailVisible.value.startDate.value}
+					endDate={isDetailVisible.value.endDate.value}
 					description={isDetailVisible.value.description.value}
 					responsibilities={isDetailVisible.value.responsibilities.value}
 					techStack={isDetailVisible.value.techStack.value}
