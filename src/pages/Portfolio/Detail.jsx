@@ -8,7 +8,7 @@ const PortfolioDetail = (props) => {
     const openEditModal = (key) => setEditKey(key);
     const closeEditModal = () => {
         setEditKey(null);
-    }
+    };
 
     const [editedData, setEditedData] = useState({
         description: props.description,
@@ -50,6 +50,10 @@ const PortfolioDetail = (props) => {
         };
 
         switch(editKey){
+            case "title":
+                return <PortfolioModal.DescriptionEdit {...commonProps} />;
+            case "period":
+                return <PortfolioModal.DescriptionEdit {...commonProps} />;
             case "description":
                 return <PortfolioModal.DescriptionEdit {...commonProps} />;
             case "responsibilities":
@@ -73,11 +77,17 @@ const PortfolioDetail = (props) => {
                 ×
             </button>
 
-            <h1>{props.title}</h1>
-            <p className="meta">{props.period}</p>
-
+            <h1>
+                {props.title}
+                <button onClick={() => openEditModal("title")}>+</button>
+            </h1>
+            <p className="meta">
+                {props.period}
+                <button onClick={() => openEditModal("period")}>+</button>
+            </p>
             <div className="section">
-                <h2>설명
+                <h2>
+                    설명
                     <button onClick={() => openEditModal("description")}>+</button>
                 </h2>
                 <p>{props.description}</p>
