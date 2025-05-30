@@ -2,14 +2,6 @@ import React, { useState } from 'react';
 import PortfolioModal from "../../components/Modal/Portfolio/index";
 import "../../styles/PortfolioDetail.css";
 
-const MODAL_COMPONENTS = {
-    title: PortfolioModal.TitleEdit,
-    description: PortfolioModal.DescriptionEdit,
-    responsibilities: PortfolioModal.ResponsibilitiesEdit,
-    techStack: PortfolioModal.TechStackEdit,
-    outcome: PortfolioModal.PerformanceEdit
-};
-
 const PortfolioDetail = (props) => {
     const [editKey, setEditKey] = useState(null);
 
@@ -32,7 +24,7 @@ const PortfolioDetail = (props) => {
             [key]: value
         }));
     };
-
+    //TODO: 저장 로직 추가가
     const handleSave = async() => {
         try{
             console.log("저장된 데이터:", editedData);
@@ -43,7 +35,6 @@ const PortfolioDetail = (props) => {
     };
     
     const renderModal = () => {
-        const ModalComponent = MODAL_COMPONENTS[editKey];
         //값이 없으면 종료
         if(!editKey){
             return;
@@ -102,7 +93,7 @@ const PortfolioDetail = (props) => {
             >
                 ×
             </button>
-
+            {/* 처음 데이터와 다를 경우 저장하시겠습니까 alert 및 닫기시 데이터 초기화 추가 */}
             <div className="section">
                 <h1>
                     {editedData.title}
