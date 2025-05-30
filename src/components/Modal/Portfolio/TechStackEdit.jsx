@@ -1,16 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Modal from "../Render";
 import "../../../styles/ResponsibilitiesEdit.css"
 
 //TODO: 스타일 수정필요
-const TechStackEdit = ({ isOpen, value, onChange, onSave, onClose }) => {
+const TechStackEdit = ({ isOpen, value, onSave, onClose }) => {
+
+    const [ techStack, setTechStack ] = useState(value || []);
 
     //내용이 바뀌면 배열 내 해당 인덱스 값 업데이트
     const handleInputChange = (e, index) => {
         const newValue = e.target.value;
-        const newArray = [...value];
-        newArray[index] = newValue;
-        onChange(newArray);
+        setTechStack(prev => {
+            const newArray = [...prev];
+            newArray[index] = newValue;
+            return newArray;
+        });
     };
 
     //해당 인덱스 항목 제거
@@ -25,13 +29,12 @@ const TechStackEdit = ({ isOpen, value, onChange, onSave, onClose }) => {
             }
                 newArray.push(value[i]);
         }
-        onChange(newArray);
+        setTechStack(newArray);
     };
 
     //새로운 항목 추가
     const handleAddItem = () => {
-    const newArray = [...value, ""];
-        onChange(newArray);
+        setTechStack(prev => [...prev, ""]);
     };
 
     return (
@@ -39,7 +42,7 @@ const TechStackEdit = ({ isOpen, value, onChange, onSave, onClose }) => {
             <h3>사용 도구 및 기술 수정</h3>
       
             <div className="responsibilities-container">
-                {value.map((item, index) => (
+                {techStack.map((item, index) => (
                     <div
                         key={index}
                         className="responsibility-item"
@@ -58,7 +61,7 @@ const TechStackEdit = ({ isOpen, value, onChange, onSave, onClose }) => {
                 
                 <div className="action-buttons">
                     <button onClick={onClose} className="cancel-btn">취소</button>
-                    <button onClick={onSave} className="save-btn">저장</button>
+                    <button onClick={() => onSave(techStack)} className="save-btn">저장</button>
                 </div>
         </div>
         </Modal>

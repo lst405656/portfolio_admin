@@ -2,7 +2,7 @@ import { useState, useEffect} from "react";
 import Modal from "../Render";
 import "../../../styles/ResponsibilitiesEdit.css"
 
-const ResponsibilitiesEdit = ({ isOpen, value, onChange, onSave, onClose }) => {
+const ResponsibilitiesEdit = ({ isOpen, value, onSave, onClose }) => {
 
     const [data, setData] = useState([]);
 

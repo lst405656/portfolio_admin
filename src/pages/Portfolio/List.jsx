@@ -39,14 +39,13 @@ function PortfolioList() {
 			if (!data) {
 				throw new Error("데이터를 가져오지 못했습니다.");
 			}
+			const formatDate = (dateString) => new Date(dateString).toISOString().split("T")[0];
 
 			const formattedData = data.map((item, index) => ({
 				title: { value: item.title, option: { type: "link", href: `/portfolio/detail?index=${index + 1}` } },
-				period: {
-					value: `${item.startDate} ~ ${item.endDate}`
-				},
-				startDate: { value: item.startDate },
-				endDate: { value: item.endDate },
+				period: { value: `${formatDate(item.startDate)} ~ ${formatDate(item.endDate)}` },
+				startDate: { value: formatDate(item.startDate) },
+				endDate: { value: formatDate(item.endDate) },
 				description: { value: item.description },
 				responsibilities: { value: item.responsibilities.map(r => r.responsibility) },
 				techStack: { value: item.tech_stack.map(t => t.tech) },

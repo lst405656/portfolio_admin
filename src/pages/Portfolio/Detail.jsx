@@ -2,15 +2,24 @@ import React, { useState } from 'react';
 import PortfolioModal from "../../components/Modal/Portfolio/index";
 import "../../styles/PortfolioDetail.css";
 
+const MODAL_COMPONENTS = {
+    title: PortfolioModal.TitleEdit,
+    description: PortfolioModal.DescriptionEdit,
+    responsibilities: PortfolioModal.ResponsibilitiesEdit,
+    techStack: PortfolioModal.TechStackEdit,
+    outcome: PortfolioModal.PerformanceEdit
+};
+
 const PortfolioDetail = (props) => {
     const [editKey, setEditKey] = useState(null);
 
     const openEditModal = (key) => setEditKey(key);
-    const closeEditModal = () => {
-        setEditKey(null);
-    };
+    const closeEditModal = () => setEditKey(null);
 
     const [editedData, setEditedData] = useState({
+        title: props.title,
+        startDate: props.startDate,
+        endDate: props.endDate,
         description: props.description,
         responsibilities: props.responsibilities,
         techStack: props.techStack,
@@ -24,28 +33,38 @@ const PortfolioDetail = (props) => {
         }));
     };
 
-    const handleSave = async(key, value) => {
+    const handleSave = async() => {
         try{
-            handleChange(key, value);
-            closeEditModal();
-
-        }catch{
-            
+            console.log("저장된 데이터:", editedData);
+            alert("포트폴리오가 저장되었습니다!");
+        }catch (error) {
+            console.error("저장 중 오류 발생:", error);
         }
     };
     
     const renderModal = () => {
-
+        const ModalComponent = MODAL_COMPONENTS[editKey];
         //값이 없으면 종료
         if(!editKey){
             return;
         }
-        const currentValue = props[editKey];
+        const currentValue = editedData[editKey];
         const commonProps = {
-            isOpen: true,
+            isOpen: editKey !== null,
             value: currentValue,
-            onChange: (val) => handleChange(editKey, val),
-            onSave: (data) => handleSave(editKey, data),
+            // onChange: (val) => handleChange(editKey, val),
+            onSave: (data) => {
+                // 변경된 데이터만 저장
+                if (data !== editedData[editKey]) { 
+                    handleChange(editKey, data);
+                }
+
+                if (editKey === "period"){
+                    handleChange("startDate", data.start);
+                    handleChange("endDate", data.end);
+                }
+                closeEditModal();
+            },
             onClose: closeEditModal
         };
 
@@ -54,8 +73,8 @@ const PortfolioDetail = (props) => {
                 return <PortfolioModal.TitleEdit {...commonProps} />;
             case "period":
                 commonProps.value = {
-                    startDate: props.startDate,
-                    endDate: props.endDate
+                    startDate: editedData.startDate,
+                    endDate: editedData.endDate
                 }
                 return <PortfolioModal.PeriodEdit
                     { ...commonProps }
@@ -75,6 +94,7 @@ const PortfolioDetail = (props) => {
 
     return (
         <div className={`portfolio-detail ${props.className}`}>
+            <button className="save-button" onClick={handleSave}>💾 저장</button>
             <button
                 className="close-button"
                 onClick={props.onClose}
@@ -83,20 +103,27 @@ const PortfolioDetail = (props) => {
                 ×
             </button>
 
-            <h1>
-                {props.title}
-                <button onClick={() => openEditModal("title")}>+</button>
-            </h1>
-            <p className="meta">
-                {props.startDate} ~ {props.endDate}
-                <button onClick={() => openEditModal("period")}>+</button>
-            </p>
+            <div className="section">
+                <h1>
+                    {editedData.title}
+                    <button onClick={() => openEditModal("title")}>+</button>
+                </h1>
+            </div>
+            <div className="section">
+                <h2>
+                    기간
+                    <button onClick={() => openEditModal("period")}>+</button>
+                </h2>
+                <p className="meta">
+                    {editedData.startDate} ~ {editedData.endDate}
+                </p>
+            </div>
             <div className="section">
                 <h2>
                     설명
                     <button onClick={() => openEditModal("description")}>+</button>
                 </h2>
-                <p>{props.description}</p>
+                <p>{editedData.description}</p>
             </div>
 
             <div className="section">
@@ -104,7 +131,7 @@ const PortfolioDetail = (props) => {
                     <button onClick={() => openEditModal("responsibilities")}>+</button>
                 </h2>
                 <ul>
-                    {props.responsibilities.map((item, index) => (
+                    {editedData.responsibilities.map((item, index) => (
                         <li key={index}>{item}</li>
                     ))}
                 </ul>
@@ -115,18 +142,18 @@ const PortfolioDetail = (props) => {
                     <button onClick={() => openEditModal("techStack")}>+</button>
                 </h2>
                 <ul className="tech-stack">
-                    {props.techStack.map((tech, index) => (
+                    {editedData.techStack.map((tech, index) => (
                         <li key={index}>{tech}</li>
                     ))}
                 </ul>
             </div>
 
-            {props.outcome && (
+            {editedData.outcome && (
                 <div className="section">
                     <h2>성과
                         <button onClick={() => openEditModal("outcome")}>+</button>
                     </h2>
-                    <div className="outcome-highlight">{props.outcome}</div>
+                    <div className="outcome-highlight">{editedData.outcome}</div>
                 </div>
             )}
 
