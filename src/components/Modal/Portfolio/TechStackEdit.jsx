@@ -9,12 +9,15 @@ const TechStackEdit = ({ isOpen, value, onSave, onClose }) => {
 
     //내용이 바뀌면 배열 내 해당 인덱스 값 업데이트
     const handleInputChange = (e, index) => {
-        const newValue = e.target.value;
-        setTechStack(prev => {
-            const newArray = [...prev];
-            newArray[index] = newValue;
-            return newArray;
-        });
+        const newArray = [...value];
+        newArray[index] = e.target.value;
+        setTechStack(newArray);
+    };
+
+    //저장시 부모요소로 데이터 전달
+    const handleSave = () => {
+        onSave(techStack);
+        onClose();
     };
 
     //해당 인덱스 항목 제거
@@ -27,14 +30,14 @@ const TechStackEdit = ({ isOpen, value, onSave, onClose }) => {
             if(i === index){
                 continue;
             }
-                newArray.push(value[i]);
+            newArray.push(value[i]);
         }
         setTechStack(newArray);
     };
 
     //새로운 항목 추가
     const handleAddItem = () => {
-        setTechStack(prev => [...prev, ""]);
+        setTechStack([...value, "새 기술"]);
     };
 
     return (
@@ -61,7 +64,7 @@ const TechStackEdit = ({ isOpen, value, onSave, onClose }) => {
                 
                 <div className="action-buttons">
                     <button onClick={onClose} className="cancel-btn">취소</button>
-                    <button onClick={() => onSave(techStack)} className="save-btn">저장</button>
+                    <button onClick={handleSave} className="save-btn">저장</button>
                 </div>
         </div>
         </Modal>

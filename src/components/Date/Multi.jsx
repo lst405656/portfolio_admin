@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Render from "./Render";
 
 const Multi = ({start, end, startHeader, endHeader, onChange }) => {
@@ -20,6 +20,10 @@ const Multi = ({start, end, startHeader, endHeader, onChange }) => {
             return updatedRange;
         });
     };
+
+    useEffect(() => {
+        onChange(rangeDate);
+    }, [rangeDate]);
 
     return (
         <div>

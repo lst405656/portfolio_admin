@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PortfolioModal from "../../components/Modal/Portfolio/index";
+import { supabaseAPI } from "../../supabaseClient";
 import "../../styles/PortfolioDetail.css";
 
 const PortfolioDetail = (props) => {
@@ -9,6 +10,7 @@ const PortfolioDetail = (props) => {
     const closeEditModal = () => setEditKey(null);
 
     const [editedData, setEditedData] = useState({
+        idx: props.idx,
         title: props.title,
         startDate: props.startDate,
         endDate: props.endDate,
@@ -18,17 +20,86 @@ const PortfolioDetail = (props) => {
         outcome: props.outcome
     });
 
+    useEffect(() => {
+        setEditedData({
+            idx: props.idx,
+            title: props.title,
+            startDate: props.startDate,
+            endDate: props.endDate,
+            description: props.description,
+            responsibilities: props.responsibilities,
+            techStack: props.techStack,
+            outcome: props.outcome
+        });
+    }, [
+        props.idx,
+        props.title,
+        props.startDate,
+        props.endDate,
+        props.description,
+        props.responsibilities,
+        props.techStack,
+        props.outcome
+    ]);
+
     const handleChange = (key, value) => {
         setEditedData((prev) => ({
             ...prev,
             [key]: value
         }));
     };
-    //TODO: 저장 로직 추가가
+    //TODO: 저장 로직 추가
     const handleSave = async() => {
         try{
             console.log("저장된 데이터:", editedData);
+            const convertTech = editedData.techStack.map(tech => ({
+                portfolio_id: editedData.idx,
+                tech: tech 
+            }));
+
             alert("포트폴리오가 저장되었습니다!");
+            await supabaseAPI.updateData(
+                "portfolio",
+                {
+                    title: editedData.title,
+                    description: editedData.description,
+                    outcome: editedData.outcome,
+                    startDate: editedData.startDate,
+                    endDate: editedData.endDate
+                },
+                {
+                    id: ['eq', editedData.idx]
+                }
+            );
+
+            //포트폴리오 수정
+            await supabaseAPI.updateData(
+                "portfolio",
+                {
+                    title: editedData.title,
+                    description: editedData.description,
+                    outcome: editedData.outcome,
+                    startDate: editedData.startDate,
+                    endDate: editedData.endDate
+                },
+                {
+                    id: ['eq', editedData.idx]
+                }
+            );
+
+            //기술 제거 후 생성
+            await supabaseAPI.deleteData(
+                "tech_stack",
+                {
+                    portfolio_id: ['eq', editedData.idx]
+                }
+            );
+
+            await supabaseAPI.setData(
+                "tech_stack",
+                convertTech
+            );
+            props.onClose();
         }catch (error) {
             console.error("저장 중 오류 발생:", error);
         }

@@ -42,6 +42,7 @@ function PortfolioList() {
 			const formatDate = (dateString) => new Date(dateString).toISOString().split("T")[0];
 
 			const formattedData = data.map((item, index) => ({
+				idx: { value: item.id },
 				title: { value: item.title, option: { type: "link", href: `/portfolio/detail?index=${index + 1}` } },
 				period: { value: `${formatDate(item.startDate)} ~ ${formatDate(item.endDate)}` },
 				startDate: { value: formatDate(item.startDate) },
@@ -77,17 +78,19 @@ function PortfolioList() {
 	const [animationState, setAnimationState] = useState("");
 
 	const events = {
-		onCellClick: (item, col, rowIndex, conIndex) => {
-			if (isDetailVisible && isDetailVisible.index === rowIndex && animationState === "show") {
+		onCellClick: (item) => {
+
+			if (isDetailVisible && isDetailVisible.value.idx.value === item.idx.value && animationState === "show") {
 				closeDetail();
 			} else {
-				openDetail(item, rowIndex);
+				openDetail(item);
 			}
 		},
 	};
 
-	const openDetail = (value, rowIndex) => {
-		setIsDetailVisible({ value: value, index: rowIndex });
+	const openDetail = (value) => {
+		
+		setIsDetailVisible({ value: value });
 		setAnimationState("show");
 	};
 
@@ -123,6 +126,7 @@ function PortfolioList() {
 						}
 					}}
 					onClose={closeDetail}
+					idx={isDetailVisible.value.idx.value}
 					title={isDetailVisible.value.title.value}
 					startDate={isDetailVisible.value.startDate.value}
 					endDate={isDetailVisible.value.endDate.value}
