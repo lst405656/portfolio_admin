@@ -7,18 +7,25 @@ import "../../styles/PortfolioList.css";
 function PortfolioList() {
 	const [items, setItems] = useState([]);
 	const [loading, setLoading] = useState(true);
+	const [lastIdx, setLastIdx] = useState(null);
+
 	const defaultInsertData = {
+		idx: { value: lastIdx + 2 },
 		title: { value: "제목을 입력하세요." },
 		period: { value: "기간을 입력하세요." },
 		description: { value: "설명을 입력하세요." },
+		startDate: { value: null },
+		endDate: { value: null },
 		responsibilities: { value: [] },
 		techStack: { value: [] },
 		outcome: { value: "결과를 입력하세요." },
-		files: { value: [] }
+		files: { value: [] },
+		type: "insert"
 	}
 
 	//Supabase에서 데이터 불러오기
 	const fetchData = async () => {
+		
 		try{
 			const data = await supabaseAPI.getList("portfolio",
 			`
@@ -51,10 +58,16 @@ function PortfolioList() {
 				responsibilities: { value: item.responsibilities.map(r => r.responsibility) },
 				techStack: { value: item.tech_stack.map(t => t.tech) },
 				outcome: { value: item.outcome },
-				files: { value: [] }
+				files: { value: [] },
+				type: "update"
 			}));
 
 			setItems(formattedData);
+
+			if (formattedData.length > 0) {
+				setLastIdx(formattedData[formattedData.length - 1].idx.value);
+			}
+
 			setLoading(false);
 
 		}catch(error){
@@ -104,7 +117,7 @@ function PortfolioList() {
 		<div className="portfolio-container">
 			<div className="portfolio-list">
 				<h1>📊 포트폴리오 페이지
-					<button onClick={() => openDetail(defaultInsertData, "")}>+</button>
+					<button onClick={() => openDetail(defaultInsertData)}>+</button>
 				</h1>
 				<CheckTable
 					className={"portfolio"}
