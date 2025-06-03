@@ -3,69 +3,6 @@ import PortfolioModal from "../../components/Modal/Portfolio/index";
 import { supabaseAPI } from "../../supabaseClient";
 import "../../styles/PortfolioDetail.css";
 
-const saveData = async(data) => {
-
-    const convertTech = data.techStack.map(tech => ({
-        portfolio_id: data.idx,
-        tech: tech 
-    }));
-
-    const convertResponse = data.responsibilities.map(responsibility => ({
-        portfolio_id: data.idx,
-        responsibility: responsibility 
-    }));
-
-    const portfolioData = {
-        title: data.title,
-        description: data.description,
-        outcome: data.outcome,
-        startDate: data.startDate,
-        endDate: data.endDate
-    };
-
-    if(data.type === "insert"){
-        await supabaseAPI.setData(
-            "portfolio",
-            portfolioData
-        );
-
-    }else{
-        //포트폴리오 수정
-        await supabaseAPI.updateData(
-            "portfolio",
-            portfolioData,
-            { id: ['eq', data.idx] }
-        );
-
-        //기술 제거 후 생성
-        await supabaseAPI.deleteData(
-            "tech_stack",
-            {
-                portfolio_id: ['eq', data.idx]
-            }
-        );
-    
-        //기술 제거 후 생성
-        await supabaseAPI.deleteData(
-            "responsibilities",
-            {
-                portfolio_id: ['eq', data.idx]
-            }
-        );        
-    }
-
-    await supabaseAPI.setData(
-        "tech_stack",
-        convertTech
-    );
-
-    await supabaseAPI.setData(
-        "responsibilities",
-        convertResponse
-    );
-
-};
-
 const PortfolioDetail = (props) => {
     const [editKey, setEditKey] = useState(null);
 
@@ -80,7 +17,8 @@ const PortfolioDetail = (props) => {
         description: props.description,
         responsibilities: props.responsibilities,
         techStack: props.techStack,
-        outcome: props.outcome
+        outcome: props.outcome,
+        type: props.type
     });
 
     useEffect(() => {
@@ -92,7 +30,8 @@ const PortfolioDetail = (props) => {
             description: props.description,
             responsibilities: props.responsibilities,
             techStack: props.techStack,
-            outcome: props.outcome
+            outcome: props.outcome,
+            type: props.type
         });
     }, [
         props.idx,
@@ -111,6 +50,69 @@ const PortfolioDetail = (props) => {
             [key]: value
         }));
     };
+
+    const saveData = async(data) => {
+
+        const convertTech = data.techStack.map(tech => ({
+            portfolio_id: data.idx,
+            tech: tech 
+        }));
+
+        const convertResponse = data.responsibilities.map(responsibility => ({
+            portfolio_id: data.idx,
+            responsibility: responsibility 
+        }));
+
+        const portfolioData = {
+            title: data.title,
+            description: data.description,
+            outcome: data.outcome,
+            startDate: data.startDate,
+            endDate: data.endDate
+        };
+
+        if(data.type === "insert"){
+            await supabaseAPI.setData(
+                "portfolio",
+                portfolioData
+            );
+
+        }else{
+            //포트폴리오 수정
+            await supabaseAPI.updateData(
+                "portfolio",
+                portfolioData,
+                { id: ['eq', data.idx] }
+            );
+
+            //기술 제거 후 생성
+            await supabaseAPI.deleteData(
+                "tech_stack",
+                {
+                    portfolio_id: ['eq', data.idx]
+                }
+            );
+        
+            //기술 제거 후 생성
+            await supabaseAPI.deleteData(
+                "responsibilities",
+                {
+                    portfolio_id: ['eq', data.idx]
+                }
+            );        
+        }
+
+        await supabaseAPI.setData(
+            "tech_stack",
+            convertTech
+        );
+
+        await supabaseAPI.setData(
+            "responsibilities",
+            convertResponse
+        );
+
+    };
     //TODO: 저장 로직 추가
     const handleSave = async() => {
         try{
@@ -120,6 +122,7 @@ const PortfolioDetail = (props) => {
             alert("포트폴리오가 저장되었습니다!");
             
             props.onClose();
+            props.onUpdate();
         }catch (error) {
             console.error("저장 중 오류 발생:", error);
         }

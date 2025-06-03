@@ -10,7 +10,7 @@ function PortfolioList() {
 	const [lastIdx, setLastIdx] = useState(null);
 
 	const defaultInsertData = {
-		idx: { value: lastIdx + 2 },
+		idx: { value: lastIdx + 1 },
 		title: { value: "제목을 입력하세요." },
 		period: { value: "기간을 입력하세요." },
 		description: { value: "설명을 입력하세요." },
@@ -20,7 +20,7 @@ function PortfolioList() {
 		techStack: { value: [] },
 		outcome: { value: "결과를 입력하세요." },
 		files: { value: [] },
-		type: "insert"
+		type: { value: "insert" }
 	}
 
 	//Supabase에서 데이터 불러오기
@@ -59,7 +59,7 @@ function PortfolioList() {
 				techStack: { value: item.tech_stack.map(t => t.tech) },
 				outcome: { value: item.outcome },
 				files: { value: [] },
-				type: "update"
+				type: { value: "update" }
 			}));
 
 			setItems(formattedData);
@@ -75,6 +75,23 @@ function PortfolioList() {
 			setLoading(false);
 		}
 
+	};
+
+	const deleteDetail = async () => {
+		if (selectedItems.length === 0) {
+			alert("삭제할 항목을 선택하세요.");
+			return;
+		}
+
+		try {
+			// Supabase에서 삭제 요청 보내기
+			console.log(selectedItems);
+			// 삭제 후 데이터 다시 가져오기
+			fetchData();
+			setSelectedItems([]); // 선택 항목 초기화
+		} catch (error) {
+			console.error("🚨 삭제 중 오류 발생:", error);
+		}
 	};
 
 	useEffect(() => {
@@ -101,6 +118,10 @@ function PortfolioList() {
 		},
 	};
 
+	const onUpdate = () => {
+		fetchData();
+	};
+
 	const openDetail = (value) => {
 		
 		setIsDetailVisible({ value: value });
@@ -118,6 +139,7 @@ function PortfolioList() {
 			<div className="portfolio-list">
 				<h1>📊 포트폴리오 페이지
 					<button onClick={() => openDetail(defaultInsertData)}>+</button>
+					<button onClick={deleteDetail}>🗑️ 삭제</button>
 				</h1>
 				<CheckTable
 					className={"portfolio"}
@@ -139,6 +161,7 @@ function PortfolioList() {
 						}
 					}}
 					onClose={closeDetail}
+					onUpdate={onUpdate}
 					idx={isDetailVisible.value.idx.value}
 					title={isDetailVisible.value.title.value}
 					startDate={isDetailVisible.value.startDate.value}
@@ -148,6 +171,7 @@ function PortfolioList() {
 					techStack={isDetailVisible.value.techStack.value}
 					outcome={isDetailVisible.value.outcome.value}
 					files={isDetailVisible.value.files.value}
+					type={isDetailVisible.value.type.value}
 				/>
 			)}
 		</div>
