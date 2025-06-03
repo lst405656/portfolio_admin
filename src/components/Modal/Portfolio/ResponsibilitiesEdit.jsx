@@ -1,21 +1,14 @@
-import { useState, useEffect} from "react";
+import { useState } from "react";
 import Modal from "../Render";
 import "../../../styles/ResponsibilitiesEdit.css"
 
 const ResponsibilitiesEdit = ({ isOpen, value, onSave, onClose }) => {
 
-    const [data, setData] = useState([]);
-
-    useEffect(() => {
-        if(!isOpen){
-            return;
-        }
-        setData(value || []);
-    }, [isOpen, value]);
+    const [data, setData] = useState(value || []);
 
     //내용이 바뀌면 배열 내 해당 인덱스 값 업데이트
     const handleInputChange = (e, index) => {
-        const newArray = [...value];
+        const newArray = [...data];
         newArray[index] = e.target.value;
         setData(newArray);
     };
@@ -30,20 +23,20 @@ const ResponsibilitiesEdit = ({ isOpen, value, onSave, onClose }) => {
     const handleRemoveItem = (index) => {
         const newArray = [];
 
-        for(let i = 0; i < value.length; i++){
+        for(let i = 0; i < data.length; i++){
 
             //해당 인덱스일 경우 제외
             if(i === index){
                 continue;
             }
-            newArray.push(value[i]);
+            newArray.push(data[i]);
         }
         setData(newArray);
     };
 
     //새로운 항목 추가
     const handleAddItem = () => {
-        setData([...value, "새로운 업무"]);
+        setData([...data, "새로운 업무"]);
     };
 
     return (

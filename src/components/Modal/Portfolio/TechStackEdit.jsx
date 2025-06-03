@@ -9,7 +9,7 @@ const TechStackEdit = ({ isOpen, value, onSave, onClose }) => {
 
     //내용이 바뀌면 배열 내 해당 인덱스 값 업데이트
     const handleInputChange = (e, index) => {
-        const newArray = [...value];
+        const newArray = [...techStack];
         newArray[index] = e.target.value;
         setTechStack(newArray);
     };
@@ -24,20 +24,20 @@ const TechStackEdit = ({ isOpen, value, onSave, onClose }) => {
     const handleRemoveItem = (index) => {
         const newArray = [];
 
-        for(let i = 0; i < value.length; i++){
+        for(let i = 0; i < techStack.length; i++){
 
             //해당 인덱스일 경우 제외
             if(i === index){
                 continue;
             }
-            newArray.push(value[i]);
+            newArray.push(techStack[i]);
         }
         setTechStack(newArray);
     };
 
     //새로운 항목 추가
     const handleAddItem = () => {
-        setTechStack([...value, "새 기술"]);
+        setTechStack([...techStack, "새 기술"]);
     };
 
     return (

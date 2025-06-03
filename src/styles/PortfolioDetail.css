@@ -3,8 +3,8 @@
 	top: 0;
 	right: 0;
 	width: 400px;
-	height: 900px;
-	max-width: 900px;
+	height: 90vh;
+	max-width: 700px;
 	padding: 36px;
 	background: #ffffff;
 	border-radius: 16px;
@@ -169,4 +169,36 @@
 .section textarea {
 	height: 200px;
 	width: 350px;
+}
+
+.save-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #2d6cdf; /* 약간 진한 파랑 */
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.save-button:hover {
+  background-color: #1f56c0; /* 호버 시 더 진한 파랑 */
+}
+
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-buttons {
+  display: flex;
+  gap: 8px;
 }

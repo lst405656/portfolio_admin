@@ -42,3 +42,29 @@
     height: 16px;
     cursor: pointer;
 }
+
+.action-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid #ccc;
+  background-color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-left: 6px;
+  transition: all 0.2s ease-in-out;
+}
+
+.action-button:hover {
+  background-color: #f0f4ff;
+  border-color: #2d6cdf;
+}
+
+.action-button:active {
+  background-color: #e0ebff;
+  border-color: #1a56c0;
+}

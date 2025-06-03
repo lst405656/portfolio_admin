@@ -145,9 +145,12 @@ function PortfolioList() {
 	return (
 		<div className="portfolio-container">
 			<div className="portfolio-list">
-				<h1>📊 포트폴리오 페이지
-					<button onClick={() => openDetail(defaultInsertData)}>+</button>
-					<button onClick={deleteDetail}>🗑️ 삭제</button>
+				<h1 className="header">
+					<span>📊 포트폴리오 페이지</span>
+					<div className="header-buttons">
+						<button className="action-button" onClick={() => openDetail(defaultInsertData)}>📄 추가</button>
+						<button className="action-button" onClick={deleteDetail}>🗑️ 삭제</button>
+					</div>
 				</h1>
 				<CheckTable
 					className={"portfolio"}
