@@ -92,6 +92,11 @@ export const supabaseAPI = {
     },
 
     deleteData: async (table, filters = {}) => {
+        if (Object.keys(filters).length === 0) {
+            console.warn("🚨 삭제 조건이 없으므로 삭제를 실행하지 않습니다.");
+            return null;
+        }
+
         let query = supabase.from(table).delete();
         query = applyFilters(query, filters);
 

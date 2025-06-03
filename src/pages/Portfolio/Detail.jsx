@@ -41,7 +41,8 @@ const PortfolioDetail = (props) => {
         props.description,
         props.responsibilities,
         props.techStack,
-        props.outcome
+        props.outcome,
+        props.type
     ]);
 
     const handleChange = (key, value) => {

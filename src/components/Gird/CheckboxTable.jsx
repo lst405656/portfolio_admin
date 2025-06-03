@@ -11,7 +11,7 @@ function CheckboxTableGrid({
 }) {
     const isAllSelected = selectedItems.length === data.length;
     const headerCheckboxRef = useRef(null);
-
+    
     const modifiedData = data.map((item, index) => ({
         ...item,
         index
@@ -24,42 +24,48 @@ function CheckboxTableGrid({
         }
     }, [selectedItems, data]);
 
-    const handleSelect = (index) => {
+    const handleSelect = (item) => {
         setSelectedItems((prev) =>
-            prev.includes(index) ? prev.filter((item) => item !== index) : [...prev, index]
+            prev.some((i) => i.idx.value === item.idx.value)
+                ? prev.filter((i) => i.idx.value !== item.idx.value)
+                : [...prev, item]
         );
     };
 
     const handleSelectAll = () => {
-        setSelectedItems(isAllSelected ? [] : modifiedData.map((item) => item.index));
+        setSelectedItems(isAllSelected ? [] : modifiedData);
     };
 
-    const renderRow = (item, rowIndex) => (
-        <tr
-            key={rowIndex}
-            onClick={() => events.onRowClick?.(item, rowIndex)}
-        >
-            <td>
-                <input
-                    type="checkbox"
-                    checked={selectedItems.includes(item.index)}
-                    onChange={() => handleSelect(item.index)}
-                    onClick={(e) => e.stopPropagation()}//row 클릭 방지
-                />
-            </td>
-            {columns.map((col, colIndex) => (
-                <td
-                    key={colIndex}
-                    onClick={(e) => {
-                        e.stopPropagation(); //row click 방지
-                        events.onCellClick?.(item, col, rowIndex, colIndex);
-                    }}
-                >
-                    {item[col.key].value}
+    const renderRow = (item, rowIndex) => {
+        const isSelected = selectedItems.some((i) => i.idx.value === item.idx.value);
+
+        return (
+            <tr
+                key={rowIndex}
+                onClick={() => events.onRowClick?.(item, rowIndex)}
+            >
+                <td>
+                    <input
+                        type="checkbox"
+                        checked={isSelected}
+                        onChange={() => handleSelect(item)}
+                        onClick={(e) => e.stopPropagation()}//row 클릭 방지
+                    />
                 </td>
-            ))}
-        </tr>
-    );
+                {columns.map((col, colIndex) => (
+                    <td
+                        key={colIndex}
+                        onClick={(e) => {
+                            e.stopPropagation(); //row click 방지
+                            events.onCellClick?.(item, col, rowIndex, colIndex);
+                        }}
+                    >
+                        {item[col.key].value}
+                    </td>
+                ))}
+            </tr>
+        );
+    };
 
     return (
         <table className={className}>

@@ -82,10 +82,18 @@ function PortfolioList() {
 			alert("삭제할 항목을 선택하세요.");
 			return;
 		}
-
+		
 		try {
 			// Supabase에서 삭제 요청 보내기
 			console.log(selectedItems);
+			const ids = selectedItems.map(item => item.idx.value);
+
+			await supabaseAPI.deleteData(
+				"portfolio",
+				{ id: ["in", ids] }
+			);
+			closeDetail();
+			alert("선택한 항목이 성공적으로 삭제되었습니다.");
 			// 삭제 후 데이터 다시 가져오기
 			fetchData();
 			setSelectedItems([]); // 선택 항목 초기화
